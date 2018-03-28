@@ -81,7 +81,7 @@ TEST(showunderscoresFullTest, 4) {
     text txt = create_text();
     load(txt, (char *) "/home/01/zaicev/inf/gtest-master/app/test.txt");
 
-    int outFd = open("/home/01/zaicev/inf/gtest-master/app/test_out.txt", O_WRONLY|O_CREAT);
+    int outFd = open("/home/01/zaicev/inf/gtest-master/app/test_out.txt", O_WRONLY|O_CREAT,  S_IRUSR|S_IWUSR);
     int oldOutput = dup(OUTPUT);
     dup2(outFd, OUTPUT);
     showunderscores(txt);
