@@ -26,6 +26,10 @@ SOURCES +=     main.cpp \
     ../app/myfunc.c \
     ../app/showunderscores.c \
     ../app/cursors.c \
-    ../app/process_forward.c
+    ../app/process_forward.c \
+    ../app/create_text.c \
+    ../app/load.c \
+    ../app/remove_all.c \
+    ../app/append_line.c
 
 INCLUDEPATH += ../app

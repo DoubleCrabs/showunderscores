@@ -2,6 +2,10 @@
 #define FIBONACHI_H
 
 #include <gtest/gtest.h>
+#include <fcntl.h>
+
+#define OUTPUT 1
+#define BUFFER_SIZE 1024
 
 extern "C" {
 #include "common.h"
@@ -71,6 +75,36 @@ TEST(showunderscoresTest, 3) {
     a[0] = 0;
     showunderscores_line(0, a);
     SUCCEED();
+}
+
+TEST(showunderscoresFullTest, 4) {
+    text txt = create_text();
+    load(txt, (char *) "/home/01/zaicev/inf/gtest-master/app/test.txt");
+
+    int outFd = open("/home/01/zaicev/inf/gtest-master/app/test_out.txt", O_WRONLY|O_CREAT);
+    int oldOutput = dup(OUTPUT);
+    dup2(outFd, OUTPUT);
+    showunderscores(txt);
+    close(outFd);
+    dup2(oldOutput, OUTPUT);
+
+    int f1 = open("/home/01/zaicev/inf/gtest-master/app/test_out.txt", O_RDONLY);
+    int f2 = open("/home/01/zaicev/inf/gtest-master/app/test_out.txt", O_RDONLY);
+    int f1Length, f2Length;
+    char* buf1 = (char*) malloc (sizeof(char) * BUFFER_SIZE);
+    char* buf2 = (char*) malloc (sizeof(char) * BUFFER_SIZE);
+
+    do {
+        f1Length = read(f1, buf1, BUFFER_SIZE);
+        f2Length = read(f2, buf2, BUFFER_SIZE);
+        ASSERT_EQ(f1Length, f2Length);
+        for (int i = 0; i < f1Length; i++)
+            ASSERT_EQ(buf1[i], buf2[i]);
+    } while (f1Length > 0);
+
+    close(f1);
+    close(f2);
+    free(txt);
 }
 
 
