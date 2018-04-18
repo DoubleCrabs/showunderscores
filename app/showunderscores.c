@@ -55,7 +55,7 @@ char* showunderscores_line(int index, char* contents)
 	if (copy_of_contents[i] == ' ')
 	    copy_of_contents[i] = '_';
     //выводим полученную строку
-    printf("%s\n", copy_of_contents);
+    printf("%s", copy_of_contents);
     return copy_of_contents;
 }
     

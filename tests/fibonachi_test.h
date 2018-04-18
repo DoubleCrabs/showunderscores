@@ -78,18 +78,28 @@ TEST(showunderscoresTest, 3) {
 }
 
 TEST(showunderscoresFullTest, 4) {
-    text txt = create_text();
-    load(txt, (char *) "/home/01/zaicev/inf/gtest-master/app/test.txt");
+    char* test1_path = (char *) malloc (sizeof(char) * 1024);
+    sprintf(test1_path, "%s/input-output/t1.txt", INPUT_DIR);
 
-    int outFd = open("/home/01/zaicev/inf/gtest-master/app/test_out.txt", O_WRONLY|O_CREAT,  S_IRUSR|S_IWUSR);
+    char* test2_path = (char *) malloc (sizeof(char) * 1024);
+    sprintf(test2_path, "%s/input-output/t2.txt", INPUT_DIR);
+
+    char* test_out_path = (char *) malloc (sizeof(char) * 1024);
+    sprintf(test_out_path, "%s/input-output/t_out.txt", INPUT_DIR);
+
+
+    text txt = create_text();
+    load(txt, test1_path);
+
+    int outFd = open(test_out_path, O_WRONLY|O_CREAT,  S_IRUSR|S_IWUSR);
     int oldOutput = dup(OUTPUT);
     dup2(outFd, OUTPUT);
     showunderscores(txt);
     close(outFd);
     dup2(oldOutput, OUTPUT);
 
-    int f1 = open("/home/01/zaicev/inf/gtest-master/app/test_out.txt", O_RDONLY);
-    int f2 = open("/home/01/zaicev/inf/gtest-master/app/test_out.txt", O_RDONLY);
+    int f1 = open(test_out_path, O_RDONLY);
+    int f2 = open(test2_path, O_RDONLY);
     int f1Length, f2Length;
     char* buf1 = (char*) malloc (sizeof(char) * BUFFER_SIZE);
     char* buf2 = (char*) malloc (sizeof(char) * BUFFER_SIZE);

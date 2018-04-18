@@ -47,6 +47,8 @@ node *line_return(text txt)
  *
  */
 void print_cursor(text txt){
+    if (txt->cursor->line == NULL)
+        return;
     int i;
     node *line = txt->cursor->line;
     /* Сдвиг части строки за курсором вправо */
